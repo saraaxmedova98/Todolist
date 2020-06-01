@@ -1,0 +1,20 @@
+{% extends "base.html" %} {% block title %}Todo list{% endblock %}
+
+{% block middle_content %}
+
+<div class="container">
+  <div class="list-group">
+    {% for info in infos %}
+    <a href="{{url_for('details', task_id = info.id)}}" class="list-group-item list-group-item-action flex-column align-items-start input-group">
+     <div class="d-flex w-100 justify-content-between">
+       <h4 class="mb-1">{{ info.title }}</h5>
+       <small>{{ info.deadline }}</small>
+     </div>
+     <p class="mb-1">{{ info.description }}</p>
+     <small>By {{ info.person }}</small>
+   </a>
+    {% endfor%}
+ </div>
+</div>
+
+{% endblock %}

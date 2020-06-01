@@ -1,0 +1,28 @@
+body{
+    height: 100%;
+    background-color: rgb(23, 162, 184, 0.6);
+ 	font-family: 'Oxygen', sans-serif;
+}
+.form-inline{
+    width: 580px !important;
+}
+.search-input{
+    width: 480px !important;
+}
+.input-group {
+    -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
+    -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
+    box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
+    background-color: #f0f0f0;
+    margin-top: 5px;
+
+}
+/* body{padding-top:30px;} */
+
+.glyphicon {  margin-bottom: 10px;margin-right: 10px;}
+
+small {
+display: block;
+line-height: 1.428571429;
+color: #999;
+}

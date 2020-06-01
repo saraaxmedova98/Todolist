@@ -1,0 +1,62 @@
+{% extends "base.html" %} 
+{% block title %}Details{% endblock %}
+{% block css%} <link rel="stylesheet" href="{{url_for('static' , filename='css/details.css')}}"> {% endblock%}
+{% block middle_content %}
+   <main>
+      <div class="main-block">
+          <div class="inner-block">
+              <div class="detail-box">
+                  <ul class="info-list">
+                    <li>
+                      <label for="">Title</label>
+                      <h5 class="mb-1 right-side">{{ task.title }}</h5>
+                   </li>
+                   <hr></hr>
+                    <li>
+                      <label for="">Description </label>
+                     <p class="mb-1 right-side">{{ task.description }}</p>
+                      </li>
+                       <hr></hr>
+                      <li>
+                      <label for="">Created by</label>
+                      <p class = 'right-side'>By {{ task.person }}</p>
+                   </li>
+                    <hr></hr>
+                     <li>
+                      <label for="">Deadline</label>
+                     <p class = 'right-side'>{{ task.deadline }}</p>
+                     </li>  
+                      <hr></hr>                  
+                     <a href="{{url_for('update', task_id = task.id)}}" class="change-btn btn btn-outline-secondary">Update</a>
+                     <button type="button" class="change-btn btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal">
+                      Delete 
+                    </button>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Do you want to delete task?</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
+                            <form action="{{url_for('delete', task_id = task.id)}}" method="POST">
+                              <input type="submit" value="Delete" class="btn btn-danger">
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  
+                  </ul>          
+              </div>
+          </div>
+      </div>
+  </main>
+
+
+{% endblock  %}

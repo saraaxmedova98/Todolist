@@ -1,18 +1,24 @@
-body {
-    margin: 0;
-    padding: 0;
-    background-color: rgb(23, 162, 184, 0.6);
-  }
-  .back{
-    width: 100px;
-    margin: 30px 30px 0; 
-  }
-  .back i{
-      font-size: 35px;
-      color: #ffffff;
+body{
+  height: 100%;
+  background-color: rgb(23, 162, 184, 0.6);
+  font-family: 'Oxygen', sans-serif !important;
+}
+.form-inline{
+  width: 580px !important;
+}
+.search-input{
+  width: 480px !important;
+}
+.input-group {
+  -webkit-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
+  -moz-box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
+  box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.21)!important;
+}
+  .alert{
+    margin-bottom: 0 !important;
   }
   #login .container #login-row #login-column #login-box {
-    margin-top: 120px;
+    margin-top: 90px;
     max-width: 600px;
     height: 340px;
     border: 1px solid #9C9C9C;

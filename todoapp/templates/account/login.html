@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+ {% block title %} 
+    Log in
+  {% endblock %}
+
+  {% block css%} <link rel="stylesheet" href="{{url_for('static' , filename='css/login.css')}}"> {% endblock%}
+  {% block middle_content %}
+  <div id="login">
+     <div class="container">
+        <div id="login-row" class="row justify-content-center align-items-center">
+            <div id="login-column" class="col-md-6">
+                <div id="login-box" class="col-md-12">
+                    <form id="login-form" class="form" action="" method="post">
+                        {{form.hidden_tag()}}
+                        <h3 class="text-center text-info">Login</h3>
+                        <div class="form-group">
+                            {{form.email.label}} 
+                            {% if form.email.errors %}
+                            <div class="input-group">
+                            {{ form.email(class= 'form-control is-invalid', placeholder='Enter you email')}}
+                            <div class="invalid-feedback">
+                                    {% for error in form.email.errors %}
+                                    <span>{{error}}</span>
+                                    {% endfor %}
+                            </div>
+                            </div>
+                            {% else %}
+                            <div class="input-group">
+                             {{ form.email(class= 'form-control', placeholder='Enter you email')}}
+                             </div>
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                                {{form.password.label}} 
+                                {% if form.password.errors %}
+                                <div class="input-group">
+                                {{ form.password(class= 'form-control is-invalid', placeholder='Enter you password')}}
+                                <div class="invalid-feedback">
+                                        {% for error in form.password.errors %}
+                                        <span>{{error}}</span>
+                                        {% endfor %}
+                                </div>
+                              </div>  
+                                {% else %}
+                                <div class="input-group">
+                                 {{ form.password(class= 'form-control', placeholder='Enter you password')}}
+                                 </div>
+                                {% endif %}
+                        </div>
+                        <div class="form-group form-check">
+                            {{ form.remember(class = 'form-check-input')}}
+                            {{form.remember.label(class = 'form-check-label')}}
+                            
+                        </div>
+                        <div id="register-link" class="text-right">
+                            {{ form.login_btn(class = 'btn btn-block login-button button') }}
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+  {% endblock %}

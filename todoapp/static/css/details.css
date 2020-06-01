@@ -1,0 +1,59 @@
+body{
+    height: 100%;
+    background-color: rgb(23, 162, 184, 0.6);
+ 	font-family: 'Oxygen', sans-serif !important;
+}
+.form-inline{
+    width: 580px !important;
+}
+.search-input{
+    width: 480px !important;
+}
+.main-block {
+    position: relative;
+    width: 100%;
+    float: left;
+}
+.inner-block {
+    position: relative;
+    margin: 60px auto 0 auto;
+    padding: 15px;
+    background-color: #f0f0f0;
+    max-width: 1000px;
+}
+.detail-box {
+    display: flex;
+    justify-content: space-around;
+    margin: auto;
+}
+.info-list {
+    position: relative;
+    width: 100%;
+}
+.info-list li {
+    float: none;
+    display: flex;
+    justify-content: space-between;
+    margin: 5px;
+    padding: 5px;
+}
+label, p {
+    color: #535353;
+}
+section{
+    width: 70%;
+}
+.right-side{
+    width: 40%;
+}
+.types{
+    width: auto;
+}
+.change-btn{
+    float: right;
+    margin-right: 12px;
+    margin-top: 18px;
+    padding: 5px 27px;
+    border-radius: 17px;
+    transition: all .3s ease-in-out;
+}
