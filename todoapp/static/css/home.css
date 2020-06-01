@@ -26,3 +26,17 @@ display: block;
 line-height: 1.428571429;
 color: #999;
 }
+
+.emp-profile{
+    width: 900px;
+    padding: 3%;
+    margin: 5% auto 0 auto;
+    border-radius: 0.5rem;
+    background: #fff;
+}
+.emp-profile h1{
+    font-family: 'Chelsea Market', cursive;
+    background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
+    padding: 20px;  
+    color: #f0f0f0 ;
+}

@@ -1,2 +1,55 @@
-{% extends "base.html" %}  {% block title %}Home page{% endblock %}
+{% extends "base.html" %} 
+ {% block title %}Home page{% endblock %}
 
+
+{% block middle_content %}
+
+<div class="container emp-profile">
+    <div class="accordion" id="accordionExample">
+        <h1 class="text-center">To Do List app</h1>
+        <div class="card">
+          <div class="card-header" id="headingOne">
+            <h2 class="mb-0">
+              <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                <h2 class="text-center">What can you do with it?</h2>
+              </button>
+            </h2>
+          </div>
+      
+          <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+            <div class="card-body">
+                For the most part, to-dos are used to follow daily tasks, but you can also use them for larger projects like planning a party. Longer-term to-dos allow you to break major tasks into smaller chunks that are easier to accomplish and allow you to visualize every step you need to take to attain your goal. To-dos are incredibly versatile as they serve the general purpose of laying out tasks that you need to accomplish.
+              </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-header" id="headingTwo">
+            <h2 class="mb-0">
+              <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                <h2 class="text-center">What is the purpose of making a list?</h2>
+              </button>
+            </h2>
+          </div>
+          <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+            <div class="card-body">
+                The primary purpose of a to-do list isn't to get everything done. ... A close second is that is this: a to-do list helps prevent your most urgent things from slipping through the cracks—it prevents you from dropping any major balls. That's because any good to-do list allows you to emphasize your highest priority items.
+               </div>
+          </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="headingThree">
+              <h5 class="mb-0">
+                <button class="btn btn-link btn-block text-left collapsed" type="button" data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                  <h2 class="text-center">What is the purpose of a personal task list?</h2>
+                </button>
+              </h5>
+            </div>
+            <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+              <div class="card-body">
+                One of the most important reasons for keeping a to-do list is the organization. Organizing your tasks with a list can make everything much more manageable and make you feel grounded. Seeing a clear outline of your completed and uncompleted tasks will help you feel organized and stay mentally focused.
+                </div>
+            </div>
+          </div>
+    </div>
+      </div>
+{% endblock  %}

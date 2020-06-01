@@ -50,6 +50,3 @@ class ProfileForm(FlaskForm):
             if user:
                 raise ValidationError("This email is already taken")
 
-class SearchForm(FlaskForm):
-    search_input = StringField("Title")
-    submit = SubmitField('Search')
