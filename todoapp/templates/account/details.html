@@ -24,9 +24,10 @@
                     <hr></hr>
                      <li>
                       <label for="">Deadline</label>
-                     <p class = 'right-side'>{{ task.deadline }}</p>
+                     <p class = 'right-side'>{{ task.deadline|date }}</p>
                      </li>  
-                      <hr></hr>                  
+                      <hr></hr>   
+                    {% if task.person.username == current_user.username %}               
                      <a href="{{url_for('update', task_id = task.id)}}" class="change-btn btn btn-outline-secondary">Update</a>
                      <button type="button" class="change-btn btn btn-outline-secondary" data-toggle="modal" data-target="#exampleModal">
                       Delete 
@@ -51,6 +52,7 @@
                         </div>
                       </div>
                     </div>
+                    {% endif %}
                   
                   </ul>          
               </div>

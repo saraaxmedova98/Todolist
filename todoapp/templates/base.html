@@ -21,25 +21,25 @@
 
 <body>
     <!-- {% block content %} -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
                <div class="collapse navbar-collapse" id="navbarSupportedContent">
           <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="{{ url_for('home') }}">Home <span class="sr-only">(current)</span></a>
+            <li class="nav-item {% if request.path == '/home/' %}active{% endif %}">
+              <a class="nav-link " href="{{ url_for('home') }}">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('tasks') }}">Todo list</a>
+            <li class="nav-item {% if request.path == '/tasks/' %}active{% endif %}">
+              <a class="nav-link" href="{{ url_for('tasks') }}">Todo list </a>
             </li>
           </ul>
           <form class="form-inline mr-auto my-lg-0" method = 'GET' action='/search'>
             <input class="form-control mr-sm-3 search-input" name='keyword' type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Search</button>
+            <button class="btn btn-outline-light my-2 my-sm-0" type="submit">Search</button>
           </form>
           <ul class="navbar-nav ">
             {% if current_user.is_authenticated %}
            
             <li class="nav-item">
-              <a class="nav-link" href="{{url_for('create_task')}}">Create task</a>
+              <a class="nav-link {% if request.path == '/task/create/' %}active{% endif %}" href="{{url_for('create_task')}}">Create task</a>
             </li>
              <li class="nav-item">
               <a class="nav-link" href="{{url_for('logout')}}">Log out</a>

@@ -1,0 +1,91 @@
+{% extends "base.html" %} 
+{% block css%} <link rel="stylesheet" href="{{url_for('static' , filename='css/profile.css')}}"> {% endblock%}
+   
+{% block title %}Profile{% endblock %}
+
+{% block middle_content %}
+
+<div class="container emp-profile">
+    <div class="row">
+        <div class="col-md-4 mx-auto">
+            <div class="profile-img mb-4 ">
+                <img src="/image/{{current_user.image}}" alt=""/>
+            </div>
+            <div >
+                <h2 class="text-center">{{current_user.username}}</h2>
+            </div>
+        </div>
+        
+    </div>
+    <div class="row mt-3">
+        <div class="col-md-12">
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#" role="tab" aria-controls="home" aria-selected="true">Account info</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="row mt-3">
+        
+        <div class="col-md-12">
+            <div class="tab-content profile-tab" id="myTabContent">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                        
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            Username
+                        </div>
+                        <div class="col-md-6">
+                            {{current_user.username}}
+                        </div>
+                    </div>
+                    <div class="row mt-3">
+                        <div class="col-md-6">
+                            Email
+                        </div>
+                        <div class="col-md-6">
+                            {{current_user.email}}
+                        </div>
+                    </div>
+                    <div class="row mt-4">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                    <a href="{{url_for('update_profile', username = current_user)}}" class="change-btn btn btn-outline-secondary float-right mr-1">Update</a>  
+                                    <button type="button" class="change-btn btn btn-outline-secondary float-right mr-1" data-toggle="modal" data-target="#exampleModal">
+                                        Delete 
+                                        </button>
+
+                                        <!-- Modal -->
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Do you want to delete account?</h5>
+                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                                </button>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel </button>
+                                                <form action="{{url_for('delete_profile', user_id = current_user.id)}}" method="POST">
+                                                <input type="submit" value="Delete" class="btn btn-danger">
+                                                </form>
+                                            </div>
+                                            </div>
+                                        </div>
+                                        </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+                            
+                </div>
+                <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    
+        </div>
+    </div>
+           
+                        
+</div>
+{% endblock  %}

@@ -4,29 +4,44 @@
 {% block title %}Profile{% endblock %}
 
 {% block middle_content %}
-
+<style>
+    #profileimgInp{
+    opacity: 0;
+    position: absolute;
+    z-index: -1;
+}
+.add-img-label{
+    margin: 0 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 30px;
+    position: absolute;
+    right: 0;
+    bottom: 40px;
+    
+}
+</style>
 <div class="container emp-profile">
-    <form action="" method="POST" class="form-box">
+    <form action="" method="POST" class="form-box" enctype="multipart/form-data">
         {{form.hidden_tag()}}
-                <div class="row">
-                        <div class="profile-img ">
-                            <img src="{{image_file}}" alt=""/>
+                <div class="row ">
+                    <div class="col-md-4 d-flex flex-column mx-auto">
+                        <div class="profile-img mb-4 ">
+                            <label for="profileimgInp" class="add-img-label bold"><i class="fas fa-camera"></i></i></label>
+                            <input type="file" id='profileimgInp' name="image" id="">
+                            <img id='blah' src="/image/{{current_user.image}}" alt=""/>
                         </div>
-                    <div >
-                        <h2>{{current_user.username}}</h2>
-                        <p>{{current_user.email}}</p>
+                        <div >
+                            <h2 class="text-center">{{current_user.username}}</h2>
+                        </div>
                     </div>
+                    
                    
-                </div> <div class="row mt-3">
-                    <div class="col-md-12">
-                        <ul class="nav nav-tabs" id="myTab" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" id="home-tab" data-toggle="tab" href="#" role="tab" aria-controls="home" aria-selected="true">Edit info</a>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="row mt-3">
+                </div> 
+               <hr>
+                <div class="row mt-5">
                    
                     <div class="col-md-12">
                         <div class="tab-content profile-tab" id="myTabContent">
@@ -74,29 +89,6 @@
                                         {% else %}
                                         <div class="input-group">
                                          {{ form.email(class= 'form-control')}}
-                                         </div>
-                                        {% endif %}
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-6">
-                                        {{form.password.label}}
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="form-group">
-                                        {% if form.password.errors %}
-                                        <div class="input-group">
-                                        {{ form.password(class= 'form-control is-invalid')}}
-                                        <div class="invalid-feedback">
-                                                {% for error in form.password.errors %}
-                                                <span>{{error}}</span>
-                                                {% endfor %}
-                                        </div>
-                                        </div>
-                                        {% else %}
-                                        <div class="input-group">
-                                         {{ form.password(class= 'form-control')}}
                                          </div>
                                         {% endif %}
                                         </div>

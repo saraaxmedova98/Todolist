@@ -4,16 +4,34 @@
 
 <div class="container">
   <div class="list-group">
-    {% for info in infos %}
-    <a href="{{url_for('details', task_id = info.id)}}" class="list-group-item list-group-item-action flex-column align-items-start input-group">
-     <div class="d-flex w-100 justify-content-between">
-       <h4 class="mb-1">{{ info.title }}</h5>
-       <small>{{ info.deadline }}</small>
-     </div>
-     <p class="mb-1">{{ info.description }}</p>
-     <small>By {{ info.person }}</small>
-   </a>
+    {% for info in infos.items %}
+      <div  class="list-group-item list-group-item-action flex-column align-items-start input-group">
+        <a class="mb-2" href="{{url_for('user_tasks', username = info.person.username)}}">By {{ info.person }}</a>
+        <div class="d-flex w-100 justify-content-between">
+          <h4 class="mb-1">{{ info.title|capitalize }}</h5>
+          <small>{{ info.deadline|date }} </small>
+        </div>
+        <p class="mb-1">{{ info.description|capitalize }}</p>
+        <div class="d-flex justify-content-end"><a href="{{url_for('details', task_id = info.id)}}"> Read More</a></div>
+      </div>
     {% endfor%}
+    
+ </div>
+ <div class="pagination d-flex justify-content-center mt-5">
+  <a class="btn btn-outline-secondary mx-1 {% if not infos.has_prev %}disabled{% endif %}"  href="./?page={{infos.prev_num}}">&laquo</a>
+    {% for page_num in infos.iter_pages() %}
+      {% if page_num %}
+        {% if infos.page == page_num %}
+        <a class="btn btn-secondary mx-1" href="{{url_for('tasks', page = page_num)}}">{{page_num}}</a>
+        {% else %}
+        <a class="btn btn-outline-secondary mx-1" href="{{url_for('tasks', page = page_num)}}">{{page_num}}</a>
+        {% endif %}
+      {% else %}
+      ...
+      {% endif %}
+    {% endfor%}
+  <a class="btn btn-outline-secondary mx-1 {% if not infos.has_next %}disabled{% endif %}" href="./?page={{infos.next_num}}">&raquo</a>
+
  </div>
 </div>
 

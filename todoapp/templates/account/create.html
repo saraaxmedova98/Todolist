@@ -8,7 +8,7 @@
       <div class="container">
         <div class="row main">
             <div class="main-login main-center">
-                <form class="" method="post" action="#">
+                <form class="" method="post" action="{{request.url}}">
                     {{form.hidden_tag()}}
                 <div class="form-group">
                         {{ form.title.label}}
@@ -52,7 +52,7 @@
                     {{ form.deadline.label}}
                     {% if form.deadline.errors %}
                         <div class="input-group">
-                            {{ form.deadline(class= 'form-control is-invalid')}}
+                            {{ form.deadline(class= 'form-control is-invalid',type='date')}}
                             <div class="invalid-feedback">
                                 {% for error in form.deadline.errors %}
                                 <span>{{error}}</span>
@@ -61,7 +61,7 @@
                         </div>
                     {% else %}
                     <div class="input-group">
-                       {{ form.deadline(class= 'form-control')}}
+                       {{ form.deadline(class= 'form-control',type='date')}}
                     </div>
                     {% endif %}
                 </div>

@@ -3,17 +3,42 @@ from todoapp.forms import RegisterForm, LoginForm, TaskForm, ProfileForm
 from todoapp import app, bcrypt , db, mysql
 from todoapp.models import User, Task
 from flask_login import login_user, current_user, logout_user, login_required
+from flask_mail import Mail, Message
 import copy 
+import os
+import datetime
 
-@app.route("/home")
+mail = Mail(app)
+
+ 
+@app.template_filter('date')
+def _jinja2_filter_datetime(date, fmt=None):
+    if fmt:
+        return date.strftime(fmt)
+    else:
+        return date.strftime('%b,%e %Y')
+
+@app.route('/')
+@app.route("/home/")
 def home():
     return render_template("home.html")
 
-@app.route('/tasks')
+@app.route('/tasks/')
 @login_required
 def tasks():
-    task_list = Task.query.filter_by( person = current_user)
+    page = request.args.get('page', 1, type=int)
+    task_list = Task.query.order_by(Task.deadline.desc()).paginate(page=page,per_page=4)
     return render_template("tasks.html", infos= task_list)
+
+
+@app.route('/tasks/<username>/')
+@login_required
+def user_tasks(username):
+    page = request.args.get('page', 1, type=int)
+    user = User.query.filter_by(username = username).first_or_404()
+    task_list = Task.query.filter_by(user_id = user.id).order_by(Task.deadline.desc()).paginate(page=page,per_page=4)
+    return render_template("tasks.html", infos= task_list)
+
 
 @app.route("/register", methods= ['GET', 'POST'])
 def register():
@@ -23,11 +48,16 @@ def register():
     if form.validate_on_submit():
         password_hash = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
         user = User(username = form.username.data, email=form.email.data, password = password_hash)
+
         db.session.add(user)
         db.session.commit()
+        msg = Message('Hello', sender = 'wactopproject@gmail.com', recipients = [form.email.data])
+        msg.body = "http://localhost:5000/login"
+        mail.send(msg)
         flash("You successfully registered", "success")
         return redirect(url_for('login'))
     return render_template("account/register.html" , form = form)
+
 
 @app.route("/login", methods= ['GET', 'POST'])
 def login():
@@ -49,12 +79,13 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-@app.route("/task/create", methods= ['GET', 'POST'])
+@app.route("/task/create/", methods= ['GET', 'POST'])
 @login_required
 def create_task():
     form = TaskForm()
     if form.validate_on_submit():
-        task = Task( title = form.title.data , description = form.description.data , deadline = form.deadline.data , person = current_user )
+        print(form)
+        task = Task( title = form.title.data , description = form.description.data ,deadline=form.deadline.data, user_id = current_user.id )
         db.session.add(task)
         db.session.commit()
         flash("You successfully created task", "success")
@@ -65,8 +96,8 @@ def create_task():
 @login_required
 def details(task_id):
     task = Task.query.get_or_404(task_id)
-    if task.person != current_user:
-        abort(403)
+    # if task.person != current_user:
+    #     abort(403)
         
     return render_template("account/details.html", task = task)
 
@@ -102,55 +133,73 @@ def delete(task_id):
     flash('Your task is successfully deleted',"success")
     return redirect(url_for('tasks'))
 
-
 @app.route("/search", methods= ['GET', 'POST'])
 def search():
     search_word = request.args.get('keyword')
-    task = Task.query.filter_by(person = current_user)
-    searched_task = task.filter(Task.title.contains(search_word))
+    page = request.args.get('page', 1, type=int)
+    # task = Task.query.filter_by(person = current_user)
+    searched_task = Task.query.filter(Task.title.contains(search_word)).paginate(page=page,per_page=4)
     return render_template("tasks.html", infos = searched_task)
 
-@app.route("/profile/<username>")
+@app.route("/profile/<username>/")
 @login_required
 def profile(username):
-    form = ProfileForm()
     user = User.query.filter_by(username=username).first_or_404()
-    image_file = url_for('static', filename=current_user.image)
-    return render_template("account/profile.html", image_file = image_file , form = form)
+    return render_template("profile.html" )
+
+def allowed_image(filename):
+    if not '.' in  filename:
+        return False
+    
+    extension = filename.rsplit('.', 1)[1]
+    if extension.upper() in app.config['ALLOWED_IMAGE_EXTENSIONS']:
+        return True
+    return False
 
 @app.route("/profile/<username>/update", methods= ['GET', 'POST'])
 @login_required
 def update_profile(username):
     form = ProfileForm()
     user = User.query.filter_by(username=username).first_or_404()
-    image_file = url_for('static', filename=current_user.image) 
-    if form.validate_on_submit():
-        password_hash = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
-        current_user.username = form.username.data
-        current_user.email = form.email.data
-        current_user.password = password_hash
-        db.session.commit()
+    if request.method == 'POST':
+        if form.validate_on_submit():
+            print(request.args.get('image') , '=================')
+        # password_hash = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+            current_user.username = form.username.data
+            current_user.email = form.email.data
+            if request.files['image']:
+                image = request.files['image']
+                current_user.image = image.filename
+                image.save(os.path.join(app.config['IMAGE_UPLOADS'] , image.filename))
+                # print(image)
+                if not allowed_image(image.filename):
+                    flash('Choosen file is not image', 'danger')
+                    return redirect(request.url)
+
+            # current_user.password = password_hash
+            db.session.commit()
         flash('Your account has been updated', 'success')
-        return redirect(url_for('tasks'))
+        return redirect(request.url)
     elif request.method == 'GET':
         form.username.data = current_user.username
         form.email.data = current_user.email
-        form.password.data = current_user.password
-    return render_template("account/update_profile.html", image_file = image_file , form = form)
+        # form.password.data = current_user.password
+    return render_template("account/update_profile.html" , form = form)
 
-@app.route('/profile/<username>/delete', methods= ['GET','POST'])
+@app.route('/profile/<int:user_id>/delete', methods= ['POST'])
 @login_required
-def delete_profile(username):
-    user = User.query.filter_by(username = current_user).first()
-    task = Task.query.filter_by(person = current_user).get_or_404()
-    # if task.person == current_user:
-    if user.username != current_user:
+def delete_profile(user_id):
+    user = User.query.get_or_404(user_id)
+    task = Task.query.filter_by(user_id = current_user.id)
+    if user.username != current_user.username:
         abort(403)
-    db.session.delete(task)
+    # for t in task:
+    #     db.session.delete(t)
+    db.session.delete(task) 
     db.session.delete(user)
     db.session.commit()
     flash('Your account is successfully deleted',"success")
-    return redirect(url_for('tasks'))
+    return redirect(url_for('login'))
 
 
 
