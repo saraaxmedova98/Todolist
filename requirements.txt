@@ -89,7 +89,7 @@ olefile==0.45.1
 opencv-python==4.2.0.34
 packaging==20.3
 pandocfilters==1.4.2
-paramiko==2.0.0
+paramiko==2.10.1
 parso==0.7.0
 passlib==1.7.1
 pexpect==4.2.1
